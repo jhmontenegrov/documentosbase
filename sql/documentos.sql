@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.8.1deb1
+-- version 3.5.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Sep 22, 2013 at 08:10 AM
--- Server version: 5.5.32-0ubuntu0.13.04.1
--- PHP Version: 5.4.9-4ubuntu2.3
+-- Servidor: localhost
+-- Tiempo de generación: 24-09-2013 a las 12:42:07
+-- Versión del servidor: 5.5.24-log
+-- Versión de PHP: 5.3.13
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,20 +17,20 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `documentos`
+-- Base de datos: `documentos`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `administrador`
+-- Estructura de tabla para la tabla `administrador`
 --
 
 CREATE TABLE IF NOT EXISTS `administrador` (
-  `login` int(11) NOT NULL,
-  `clave` int(11) NOT NULL,
-  `numero_documento` int(11) NOT NULL,
-  `nombres` int(11) NOT NULL,
+  `login` varchar(50) NOT NULL,
+  `clave` varchar(50) NOT NULL,
+  `numero_documento` varchar(20) NOT NULL,
+  `nombres` varchar(50) NOT NULL,
   `apellido1` varchar(50) NOT NULL,
   `apellido2` varchar(50) NOT NULL,
   PRIMARY KEY (`numero_documento`)
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `administrador` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `denuncia`
+-- Estructura de tabla para la tabla `denuncia`
 --
 
 CREATE TABLE IF NOT EXISTS `denuncia` (
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `denuncia` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `documento`
+-- Estructura de tabla para la tabla `documento`
 --
 
 CREATE TABLE IF NOT EXISTS `documento` (
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `documento` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `estado`
+-- Estructura de tabla para la tabla `estado`
 --
 
 CREATE TABLE IF NOT EXISTS `estado` (
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `estado` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `funcionario`
+-- Estructura de tabla para la tabla `funcionario`
 --
 
 CREATE TABLE IF NOT EXISTS `funcionario` (
@@ -101,27 +101,27 @@ CREATE TABLE IF NOT EXISTS `funcionario` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tipo_documento`
+-- Estructura de tabla para la tabla `tipo_documento`
 --
 
 CREATE TABLE IF NOT EXISTS `tipo_documento` (
   `id_tipo` int(11) NOT NULL,
-  `nombre` int(11) NOT NULL,
-  `descripcion` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `descripcion` varchar(50) NOT NULL,
   PRIMARY KEY (`id_tipo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuario_denuncia`
+-- Estructura de tabla para la tabla `usuario_denuncia`
 --
 
 CREATE TABLE IF NOT EXISTS `usuario_denuncia` (
   `documento_usuario_denuncia` varchar(20) NOT NULL,
-  `nombres` int(11) NOT NULL,
-  `apellido1` int(11) NOT NULL,
-  `apellido2` int(11) NOT NULL,
+  `nombres` varchar(50) NOT NULL,
+  `apellido1` varchar(50) NOT NULL,
+  `apellido2` varchar(50) NOT NULL,
   `fecha_nacimiento` date NOT NULL,
   `direccion` varchar(100) NOT NULL,
   `telefono` varchar(50) NOT NULL,
@@ -132,14 +132,14 @@ CREATE TABLE IF NOT EXISTS `usuario_denuncia` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuario_reporta`
+-- Estructura de tabla para la tabla `usuario_reporta`
 --
 
 CREATE TABLE IF NOT EXISTS `usuario_reporta` (
   `documento_usuario_reporta` varchar(20) NOT NULL,
-  `nombres` int(11) NOT NULL,
-  `apellido1` int(11) NOT NULL,
-  `apellido2` int(11) NOT NULL,
+  `nombres` varchar(50) NOT NULL,
+  `apellido1` varchar(50) NOT NULL,
+  `apellido2` varchar(50) NOT NULL,
   `direccion` varchar(100) NOT NULL,
   `telefono` varchar(50) NOT NULL,
   `correo` varchar(50) NOT NULL,
@@ -147,11 +147,11 @@ CREATE TABLE IF NOT EXISTS `usuario_reporta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `documento`
+-- Filtros para la tabla `documento`
 --
 ALTER TABLE `documento`
   ADD CONSTRAINT `documento_ibfk_4` FOREIGN KEY (`documento_funcionario`) REFERENCES `funcionario` (`numero_documento`),
