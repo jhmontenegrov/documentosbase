@@ -15,12 +15,12 @@ import java.util.logging.Logger;
  * @author camilo
  */
 public  class Conexion {
-   // static private String url="jdbc:mysql://";
-    static private String url="jdbc:postgresql://";
+    static private String url="jdbc:mysql://";
+ //   static private String url="jdbc:postgresql://";
     static private String host="localhost";
     static private String clave="root";
-    //static private String usuario="root";
-    static private String usuario="postgres";
+    static private String usuario="root";
+  //  static private String usuario="postgres";
     static private String db="documentos";
     private static Connection conexion=null;
     public static Connection getConexion()

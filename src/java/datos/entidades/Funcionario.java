@@ -4,6 +4,8 @@
  */
 package datos.entidades;
 
+import java.util.Objects;
+
 /**
  *
  * @author camilo
@@ -70,6 +72,44 @@ public class Funcionario {
 
     public void setClave(String clave) {
         this.clave = clave;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 37 * hash + Objects.hashCode(this.numeroDocumento);
+        hash = 37 * hash + Objects.hashCode(this.nombres);
+        hash = 37 * hash + Objects.hashCode(this.apellido1);
+        hash = 37 * hash + Objects.hashCode(this.apellido2);
+        hash = 37 * hash + Objects.hashCode(this.clave);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Funcionario other = (Funcionario) obj;
+        if (!Objects.equals(this.numeroDocumento, other.numeroDocumento)) {
+            return false;
+        }
+        if (!Objects.equals(this.nombres, other.nombres)) {
+            return false;
+        }
+        if (!Objects.equals(this.apellido1, other.apellido1)) {
+            return false;
+        }
+        if (!Objects.equals(this.apellido2, other.apellido2)) {
+            return false;
+        }
+        if (!Objects.equals(this.clave, other.clave)) {
+            return false;
+        }
+        return true;
     }
     
     

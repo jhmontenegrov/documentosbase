@@ -22,11 +22,19 @@ public class FuncionarioDAO implements DAOInterface<Funcionario>{
 
     @Override
     public boolean save(Funcionario entity) {
+        String sql="";
+         boolean exito = false;
         
-        boolean exito = false;
+           
+        
+        
+       
         try {
             Connection c = Conexion.getConexion();
-            PreparedStatement statement=
+            PreparedStatement statement=null;
+            if(this.findById(entity.getNumeroDocumento())==null) 
+            {    
+             statement=
                     c.prepareStatement("insert into funcionario values(?,?,?,?,?)");
             
             statement.setString(1, entity.getNumeroDocumento());
@@ -34,6 +42,18 @@ public class FuncionarioDAO implements DAOInterface<Funcionario>{
             statement.setString(3, entity.getApellido1());
             statement.setString(4, entity.getApellido2());
             statement.setString(5, entity.getClave());
+            }
+            else
+            {
+                 statement=
+                    c.prepareStatement("update  funcionario set numero_documento=?, nombres=?,apellido1=?,apellido2=?,clave=? where numero_documento=?");
+                  statement.setString(1, entity.getNumeroDocumento());
+            statement.setString(2, entity.getNombres());
+            statement.setString(3, entity.getApellido1());
+            statement.setString(4, entity.getApellido2());
+            statement.setString(5, entity.getClave());
+            statement.setString(6, entity.getNumeroDocumento());
+            }    
             
             exito = statement.execute();
             
@@ -61,7 +81,7 @@ public class FuncionarioDAO implements DAOInterface<Funcionario>{
             statement.setString(1, entity.getNumeroDocumento());
            
             
-            
+            statement.execute();
             c.close();
             
         } catch (SQLException ex) {
@@ -88,6 +108,7 @@ public class FuncionarioDAO implements DAOInterface<Funcionario>{
             ResultSet results =   statement.executeQuery();
             if(results.next())
             {
+                entity = new Funcionario();
                  entity.setNumeroDocumento(results.getString(1));
                  entity.setNombres(results.getString(2));
                  entity.setApellido1(results.getString(3));
@@ -114,12 +135,12 @@ public class FuncionarioDAO implements DAOInterface<Funcionario>{
             Connection c = Conexion.getConexion();
             PreparedStatement statement=
                     c.prepareStatement(
-                    "select numero_documento, nombres,apellido1,apellido2, clave from funcionario where numero_documento=?"
+                    "select numero_documento, nombres,apellido1,apellido2, clave from funcionario"
                     );
             
             
             ResultSet results =   statement.executeQuery();
-            if(results.next())
+            while(results.next())
             {
                  Funcionario entity = new Funcionario();
                  entity.setNumeroDocumento(results.getString(1));
