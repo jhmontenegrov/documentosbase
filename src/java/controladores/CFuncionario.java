@@ -42,9 +42,41 @@ public class CFuncionario extends HttpServlet {
                 out.print("no se pudo establecer conexión");
             else
             {
+                FuncionarioDAO fdao = new FuncionarioDAO();
+                /*
+                Funcionario f = new Funcionario("123456789","Verónica","Reyes","Barrero","2223");
                 
-                out.print("conexión establecida");
+                fdao.save(f);
+                 */
+                /*
+                Funcionario f = fdao.findById("123456789");
+                if(f==null)
+                {
+                    out.print("No se encontró a ningún empleado con ese documento");
+                    
+                }   
+                else
+                {
+                    out.println(f.getNombres());
+                    out.println(f.getApellido1());
+                    out.println(f.getApellido2());
+                }    
+                fdao.delete(f);
+                 */
+                ArrayList<Funcionario> funcionarios;
+                funcionarios =  fdao.findAll();
                 
+                for(int i=0;i<funcionarios.size();i++)
+                {
+                    out.println(funcionarios.get(i).getNombres()+" "+funcionarios.get(i).getApellido1());
+                    out.println("<br>");
+                }    
+                
+                for(Funcionario f:funcionarios)
+                {
+                    out.println(f.getNombres()+" "+f.getApellido1());
+                    out.println("<br>");
+                }                
                         
             }
         } finally {            
