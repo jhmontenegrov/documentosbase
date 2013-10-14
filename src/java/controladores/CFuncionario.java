@@ -10,6 +10,7 @@ import datos.entidades.Funcionario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "CFuncionario", urlPatterns = {"/CFuncionario"})
 public class CFuncionario extends HttpServlet {
-
+    private RequestDispatcher dispatcher;
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -37,12 +38,50 @@ public class CFuncionario extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        RequestDispatcher dispatcher;
+        String accion = request.getParameter("a");
         try {
             if(Conexion.getConexion()==null)
                 out.print("no se pudo establecer conexión");
             else
             {
                 FuncionarioDAO fdao = new FuncionarioDAO();
+                if (accion.equals("crear")){
+                dispatcher= request.getRequestDispatcher("WEB-INF/funcionario/funcionariof.jsp");
+                dispatcher.forward(request, response);
+                }
+                if (accion.equals("guardar")){
+                    String nombre=request.getParameter("nombre");
+                    String apellido1=request.getParameter("Apellido1");
+                    String apellido2=request.getParameter("Apellido2");
+                    String documento=request.getParameter("documento");
+                    String clave=request.getParameter("clave");
+                    Funcionario f=new Funcionario(nombre,apellido1,apellido2,documento,clave);
+                    fdao.save(f);
+                }
+                if (accion.equals("Mostrartodos")){
+                    ArrayList<Funcionario> funcionarios;
+                    funcionarios =  fdao.findAll();
+                    for(int i=0;i<funcionarios.size();i++)
+                    {
+                        out.println(funcionarios.get(i).getNombres()+" "+funcionarios.get(i).getApellido1());
+                        out.println("<br>");
+                    }
+                    for(Funcionario f:funcionarios)
+                    {
+                    out.println(f.getNombres()+" "+f.getApellido1());
+                    out.println("<br>");
+                    }
+                }
+                if (accion.equals("borrar")){
+                    String nombre=request.getParameter("nombre");
+                    String apellido1=request.getParameter("Apellido1");
+                    String apellido2=request.getParameter("Apellido2");
+                    String documento=request.getParameter("documento");
+                    String clave=request.getParameter("clave");
+                    Funcionario f=new Funcionario(nombre,apellido1,apellido2,documento,clave);
+                    fdao.delete(f);
+                }
                 /*
                 Funcionario f = new Funcionario("123456789","Verónica","Reyes","Barrero","2223");
                 
@@ -63,21 +102,8 @@ public class CFuncionario extends HttpServlet {
                 }    
                 fdao.delete(f);
                  */
-                ArrayList<Funcionario> funcionarios;
-                funcionarios =  fdao.findAll();
+                                
                 
-                for(int i=0;i<funcionarios.size();i++)
-                {
-                    out.println(funcionarios.get(i).getNombres()+" "+funcionarios.get(i).getApellido1());
-                    out.println("<br>");
-                }    
-                
-                for(Funcionario f:funcionarios)
-                {
-                    out.println(f.getNombres()+" "+f.getApellido1());
-                    out.println("<br>");
-                }                
-                        
             }
         } finally {            
             out.close();
