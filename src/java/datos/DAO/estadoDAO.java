@@ -28,11 +28,9 @@ public class estadoDAO implements DAOInterface<estado>{
             PreparedStatement statement=null;
             if(this.findById(entity.getId_estado())==null) 
             {    
-             statement=
-                    c.prepareStatement("insert into estado values(?,?)");
-            
-                statement.setInt(1, entity.getId_estado());
-                statement.setString(2, entity.getNombre());
+             statement=c.prepareStatement("insert into estado values(?,?)");
+             statement.setInt(1, entity.getId_estado());
+             statement.setString(2, entity.getNombre());
                 
             }
             else
@@ -41,12 +39,12 @@ public class estadoDAO implements DAOInterface<estado>{
                 statement.setInt(1, entity.getId_estado());
                 statement.setString(2, entity.getNombre());
                 statement.setInt(3, entity.getId_estado());
-            
+            }
             exito = statement.execute();
             
             exito=true;
             c.close();
-            }
+            
             
         }
         catch (SQLException ex){
@@ -61,12 +59,12 @@ public class estadoDAO implements DAOInterface<estado>{
 
     @Override
     public void delete(estado entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public estado findById(Object id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 
     @Override
@@ -74,12 +72,11 @@ public class estadoDAO implements DAOInterface<estado>{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     public static void main(String args[])
-{
-    estado a=new estado();
-    a.setId_estado(1);
-    a.setNombre("perdido");
-    estado b=new estado();
-    estadoDAO b=new estadoDAO(1,"");
-    
-}
+    {
+        estado a=new estado();
+        a.setId_estado(1);
+        a.setNombre("perdido");
+        estadoDAO dao=new estadoDAO();
+        dao.save(a);   
+    }
 }

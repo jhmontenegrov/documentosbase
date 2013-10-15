@@ -75,9 +75,8 @@ public class AdministradorDAO implements DAOInterface<Administrador>{
 
     @Override
     public Administrador findById(Object id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
-
     @Override
     public ArrayList<Administrador> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -91,6 +90,8 @@ public static void main(String args[])
     a.setNombres("jhonatan  ");
     a.setApellido1("montenegro");
     a.setApellido2("vargas");
+    AdministradorDAO dao=new AdministradorDAO();
+    dao.save(a);
 }
     
 }
