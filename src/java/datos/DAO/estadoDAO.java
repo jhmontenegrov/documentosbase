@@ -8,6 +8,7 @@ import datos.configuracion.Conexion;
 import datos.entidades.estado;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -59,12 +60,48 @@ public class estadoDAO implements DAOInterface<estado>{
 
     @Override
     public void delete(estado entity) {
-        
+        try {
+            Connection c = Conexion.getConexion();
+            PreparedStatement statement=c.prepareStatement("delete from estado where id_estado=?");
+            statement.setInt(1, entity.getId_estado());
+            statement.execute();
+            c.close();
+           
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(FuncionarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
+        }
     }
 
     @Override
     public estado findById(Object id) {
-        return null;
+        estado entity=null;
+        try {
+            Connection c = Conexion.getConexion();
+            PreparedStatement statement=
+                    c.prepareStatement(
+                    "select numero_documento, nombres,apellido1,apellido2, clave from funcionario where numero_documento=?"
+                    );
+            statement.setInt(1,(int)id);
+            
+            ResultSet results =   statement.executeQuery();
+            if(results.next())
+            {
+                 entity = new estado();
+                 entity.setId_estado(results.getInt(1));
+                 entity.setNombre(results.getString(2));
+            }    
+            
+            c.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FuncionarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
+        }
+        
+        
+        return entity;
     }
 
     @Override
@@ -77,6 +114,8 @@ public class estadoDAO implements DAOInterface<estado>{
         a.setId_estado(1);
         a.setNombre("perdido");
         estadoDAO dao=new estadoDAO();
-        dao.save(a);   
+        //dao.save(a);
+        //dao.delete(a);
+        dao.findById(a);
     }
 }
