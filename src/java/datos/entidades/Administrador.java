@@ -9,7 +9,7 @@ package datos.entidades;
  *
  * @author 201
  */
-public class Administrador {
+public class administrador {
     private String login, clave, numerodedocumento, nombres, apellido1, apellido2;
 
     public String getLogin() {

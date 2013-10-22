@@ -45,8 +45,6 @@ public class estadoDAO implements DAOInterface<estado>{
             
             exito=true;
             c.close();
-            
-            
         }
         catch (SQLException ex){
             Logger.getLogger(estadoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -81,9 +79,9 @@ public class estadoDAO implements DAOInterface<estado>{
             Connection c = Conexion.getConexion();
             PreparedStatement statement=
                     c.prepareStatement(
-                    "select numero_documento, nombres,apellido1,apellido2, clave from funcionario where numero_documento=?"
+                    "select id_estado, nombre from estado where id_estado=?"
                     );
-            statement.setInt(1,(int)id);
+            statement.setString(1,(String)id);
             
             ResultSet results =   statement.executeQuery();
             if(results.next())
@@ -106,16 +104,46 @@ public class estadoDAO implements DAOInterface<estado>{
 
     @Override
     public ArrayList<estado> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<estado> entities = new ArrayList<estado>();
+        
+            try {
+            Connection c = Conexion.getConexion();
+            PreparedStatement statement=
+                    c.prepareStatement(
+                    "select id_documento, nombre from estado"
+                    );
+            
+            
+            ResultSet results =   statement.executeQuery();
+            while(results.next())
+            {
+                 estado entity = new estado();
+                 entity.setId_estado(results.getInt(1));
+                 entity.setNombre(results.getString(2));
+                 entities.add(entity);
+            }    
+            c.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(FuncionarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
+        }
+        return entities;
     }
     public static void main(String args[])
     {
+        estado x;
         estado a=new estado();
         a.setId_estado(1);
         a.setNombre("perdido");
         estadoDAO dao=new estadoDAO();
         //dao.save(a);
+        x=dao.findById("1");
+        if(x==null){
+            System.out.println("Se encontró a nadie con ese documento");
+        }
+        else{
+            System.out.println(x);
+        }
         //dao.delete(a);
-        dao.findById(a);
     }
 }

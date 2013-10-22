@@ -14,7 +14,6 @@ public class estado {
     public int getId_estado() {
         return id_estado;
     }
-
     public void setId_estado(int id_estado) {
         this.id_estado = id_estado;
     }
@@ -29,7 +28,7 @@ public class estado {
 
     @Override
     public String toString() {
-        return "Estado{" + "id_estado=" + id_estado + ", nombre=" + nombre + '}';
+        return "Estado{" + "id_estado=" + id_estado + ", estado=" + nombre + '}';
     }
     
         
